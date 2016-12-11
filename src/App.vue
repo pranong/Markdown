@@ -34,13 +34,12 @@
         <!-- Main Menu -->
         <div class="side-menu-container">
             <ul class="nav navbar-nav">
-
-                <li><a href="#"><span class="glyphicon glyphicon-send"></span> Note #1</a></li>
-                <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Note #1</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Note #2</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Note #3</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-send"></span> Link</a></li>
+                <ul class="nav navbar-nav" v-for="value in notes" @click="pagenote(value.id)">
+                    <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Note {{value.id}}</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                  <li><a href="#" @click="addnote()"><span class="glyphicon glyphicon-plus-sign"></span></a>
                 </ul>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -52,9 +51,33 @@
         <div class="container-fluid">
             <div class="side-body">
                <h1> Main Content here </h1>
-               <pre> Resize the screen to view the left slide menu </pre>
-               <textarea rows="20" cols="100">
-                 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+               <div class="btn-group">
+               <button type="button" class="btn btn-default" aria-label="Left Align">
+                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+               </button>
+               <button type="button" class="btn btn-default" aria-label="Center Align">
+                 <span class="glyphicon glyphicon-align-center" aria-hidden="true"></span>
+               </button>
+               <button type="button" class="btn btn-default" aria-label="Right Align">
+                 <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
+               </button>
+               </div>
+
+               <div class="btn-group">
+               <button type="button" class="btn btn-default" aria-label="Left Align">
+                 <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
+               </button>
+               <button type="button" class="btn btn-default" aria-label="Center Align">
+                 <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+               </button>
+               <button type="button" class="btn btn-default" aria-label="Right Align">
+                 <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+               </button>
+               </div>
+               <br>
+               <h1> </h1>
+               <textarea rows="20" cols="150" align="right" :id="count" @click="text(count)">
+                 Note #{{count}}
                </textarea>
             </div>
         </div>
@@ -64,11 +87,37 @@
 
 <script>
 import Hello from './components/Hello'
-
 export default {
   name: 'app',
   components: {
     Hello
+  },
+  data () {
+    return {
+      notes: [],
+      count: 0,
+      hidden: [],
+      text: []
+    }
+  },
+  methods: {
+    addnote () {
+      this.count++
+      var note = {
+        id: this.count
+      }
+      var page = {
+        status: true
+      }
+      this.notes.push(note)
+      this.hidden.push(page)
+    },
+    text (id) {
+      var textmessage = {
+        text: this.test[id]
+      }
+      this.text.push(textmessage)
+    }
   }
 }
 </script>
